@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import logoImg from '../../assets/logo.svg';
 import { Link, useHistory } from 'react-router-dom';
-import { FiPower, FiTrash2 } from 'react-icons/fi';
+import { FiPower, FiTrash2, FiX } from 'react-icons/fi';
+import { FaEdit, } from "react-icons/fa";
 
 import api from '../../services/api';
 
@@ -34,7 +35,7 @@ export default function Profile() {
                 }
             });
 
-        setIncidents(incidents.filter(incident => incident.id !== id));
+            setIncidents(incidents.filter(incident => incident.id !== id));
         } catch (err) {
             alert('Error ao deletar o caso');
         }
@@ -42,23 +43,34 @@ export default function Profile() {
 
     function handleLogout() {
         localStorage.clear();
-        
+
         history.push('/');
+    }
+
+    function visitPage(){
+        window.location='/delprofile';
     }
 
     return (
         <div className="profile-container">
             <header>
                 <img src={logoImg} alt="Be the Hero" />
-                <span>Bem Vinda, {ongName} </span>
+                <span>Bem Vindo(a), {ongName} </span>
 
                 <Link className="button" to="/incidents/new">Cadastrar novo caso</Link>
+
                 <button onClick={handleLogout} type="button">
-                    <FiPower size={18} color="#E02041" />
+                    <FiPower size={23} color="#E02041" />
                 </button>
+
+            
+                <button onClick={visitPage} type="button">
+                    <FiX size={23} color="#E02041" />
+                </button>
+
             </header>
 
-            <h1>Casos cadastrados</h1>
+            <h1>Meus Casos</h1>
 
             <ul>
                 {incidents.map(incident => (
@@ -75,6 +87,15 @@ export default function Profile() {
                         <button onClick={() => handleDeleteIncident(incident.id)} type="button">
                             <FiTrash2 size={20} color="#a8a8b3" />
                         </button>
+
+                        <div className="icons">
+
+                            <button className="button2" onClick={() => { }} type="button">
+                                <FaEdit size={20} color="#a8a8b3" />
+                            </button>
+
+                        </div>
+
                     </li>
                 ))}
             </ul>
